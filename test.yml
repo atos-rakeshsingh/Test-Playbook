@@ -1,0 +1,52 @@
+---
+- hosts: all
+  tasks:
+#    - name: 1. Copy issu
+#      become: true
+#      template:
+#       src: /etc/issue
+#       dest: /etc/issue
+#       mode: 0644
+#       owner: root
+#       group: root
+#
+#    - name: 2. Copy issue  file to /etc
+#      become: true
+#      template:
+#       src: /etc/motd
+#       dest: /etc/motd
+#       mode: 0644
+#       owner: root
+#       group: root
+
+    - name: 1. Update Pass MAX_DAYS days field
+      become: true 
+      lineinfile: 
+       dest: /etc/login.defs
+       regexp: '^PASS_MAX_DAYS'
+       state: present
+       line: 'PASS_MAX_DAYS 90'
+
+    - name: 2. Update Pass MIN_DAYS days field
+      become: true 
+      lineinfile: 
+       dest: /etc/login.defs
+       regexp: '^PASS_MIN_DAYS'
+       state: present
+       line: 'PASS_MIN_DAYS 1'
+
+    - name: 3. Update Pass MIN_LEN days field
+      become: true
+      lineinfile: 
+       path: /etc/login.defs
+       regexp: '^PASS_MIN_LEN'
+       state: present
+       line: 'PASS_MIN_LEN 12'
+
+    - name: 4. Update Pass WARN_AGE days field
+      become: true
+      lineinfile:
+       path: /etc/login.defs
+       regexp: '^PASS_WARN_AGE'
+       state: present
+       line: 'PASS_WARN_AGE 10'
